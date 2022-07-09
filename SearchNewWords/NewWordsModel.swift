@@ -16,7 +16,12 @@ struct NewWords {
     }
     
     
-    func searchNewWords(_ keyWord: String) -> String {
-        return newWordsList.filter({$0.key == keyWord}).values.joined(separator: "\n")
+    func searchNewWords(_ keyWord: String) -> (Bool, String) {
+        
+        if let searchResult = newWordsList.filter({$0.key == keyWord}).values.first {
+            return (true, searchResult)
+        }else {
+            return (false, "")
+        }
     }
 }

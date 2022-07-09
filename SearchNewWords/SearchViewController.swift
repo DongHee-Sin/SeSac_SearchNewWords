@@ -8,21 +8,24 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-
+    
     // MARK: - Propertys
+    var newWordsModel = NewWords()
+    
     @IBOutlet weak var searchTextField: UITextField!
     
     @IBOutlet var newWordsExampleList: [UIButton]!
     
+    @IBOutlet weak var searchResultLabel: UILabel!
     
     
     // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        newWordsExampleList.forEach({
-            settingExampleButtonUI($0)
-        })
+        searchTextField.delegate = self
+        
+        newWordsExampleList.forEach({settingExampleButtonUI($0)})
     }
 
 
@@ -43,5 +46,36 @@ class SearchViewController: UIViewController {
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
     }
+    
+    func presentAlert(message: String) {
+        let alertController = UIAlertController(title: "검색 실패", message: "\(message)라는 신조어는 등록되지 않았습니다.", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in self?.searchTextField.text = nil}
+        alertController.addAction(alertAction)
+        present(alertController, animated: true)
+    }
+    
+    
+    @IBAction func searchButtonDidTapped(_ sender: UIButton) {
+        textFieldShouldReturn(searchTextField)
+    }
 }
 
+
+
+extension SearchViewController: UITextFieldDelegate {
+    
+    @discardableResult
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        
+        let searchResult = newWordsModel.searchNewWords(textField.text ?? "")
+        
+        if searchResult.0 {
+            searchResultLabel.text = searchResult.1
+        }else {
+            presentAlert(message: textField.text ?? "")
+        }
+        
+        return true
+    }
+}
