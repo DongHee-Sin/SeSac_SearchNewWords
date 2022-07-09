@@ -100,6 +100,13 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Gv8-6K-i2x" secondAttribute="trailing" constant="30" id="vbn-94-GKE"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="searchTextField" destination="vVl-2m-iRc" id="AoY-In-kiK"/>
+                        <outletCollection property="newWordsExampleList" destination="mXr-iX-nNM" collectionClass="NSMutableArray" id="beL-lP-bkS"/>
+                        <outletCollection property="newWordsExampleList" destination="Btj-Je-rdg" collectionClass="NSMutableArray" id="aqe-aJ-NLO"/>
+                        <outletCollection property="newWordsExampleList" destination="E02-Lc-Ec3" collectionClass="NSMutableArray" id="gnk-lQ-jnW"/>
+                        <outletCollection property="newWordsExampleList" destination="7zO-pb-wfb" collectionClass="NSMutableArray" id="Q82-Q2-jsg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
