@@ -54,7 +54,10 @@ class SearchViewController: UIViewController {
     
     func presentAlert(message: String) {
         let alertController = UIAlertController(title: "검색 실패", message: "\(message)라는 신조어는 등록되지 않았습니다.", preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in self?.searchTextField.text = nil}
+        let alertAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.searchTextField.text = nil
+            self?.searchResultLabel.text = nil
+        }
         alertController.addAction(alertAction)
         present(alertController, animated: true)
     }
