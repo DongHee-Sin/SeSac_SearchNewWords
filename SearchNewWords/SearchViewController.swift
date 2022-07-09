@@ -37,21 +37,29 @@ class SearchViewController: UIViewController {
         button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     }
     
+    
     func addRadius(_ view: UIView) {
         view.clipsToBounds = true
         view.layer.cornerRadius = view.frame.height / 5
     }
+    
     
     func addBorder(_ view: UIView) {
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
     }
     
+    
     func presentAlert(message: String) {
         let alertController = UIAlertController(title: "검색 실패", message: "\(message)라는 신조어는 등록되지 않았습니다.", preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in self?.searchTextField.text = nil}
         alertController.addAction(alertAction)
         present(alertController, animated: true)
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
     
