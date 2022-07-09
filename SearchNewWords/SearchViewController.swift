@@ -77,6 +77,11 @@ extension SearchViewController: UITextFieldDelegate {
         self.view.endEditing(true)
         
         let searchResult = newWordsModel.searchNewWords(textField.text ?? "")
+        let randomNewWords = newWordsModel.getRandomNewWords(searchTextField.text ?? "")
+        
+        for (word, button) in zip(randomNewWords, newWordsExampleList) {
+            button.setTitle(word, for: .normal)
+        }
         
         if searchResult.0 {
             searchResultLabel.text = searchResult.1
