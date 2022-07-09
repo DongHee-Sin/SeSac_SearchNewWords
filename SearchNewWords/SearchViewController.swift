@@ -25,6 +25,8 @@ class SearchViewController: UIViewController {
         
         searchTextField.delegate = self
         
+        updateRandomButtonTitle("")
+        
         newWordsExampleList.forEach({settingExampleButtonUI($0)})
     }
 
@@ -66,6 +68,29 @@ class SearchViewController: UIViewController {
     @IBAction func searchButtonDidTapped(_ sender: UIButton) {
         textFieldShouldReturn(searchTextField)
     }
+    
+    
+    @IBAction func newWordsButtonTapped(_ sender: UIButton) {
+        searchNewWords(sender.currentTitle ?? "")
+        updateRandomButtonTitle(sender.currentTitle ?? "")
+    }
+    
+    func searchNewWords(_ keyWord: String) {
+        let searchResult = newWordsModel.searchNewWords(keyWord)
+        
+        if searchResult.0 {
+            searchResultLabel.text = searchResult.1
+        }else {
+            presentAlert(message: keyWord)
+        }
+    }
+    
+    func updateRandomButtonTitle(_ currentKeyWord: String) {
+        let randomNewWords = newWordsModel.getRandomNewWords(currentKeyWord)
+        for (word, button) in zip(randomNewWords, newWordsExampleList) {
+            button.setTitle(word, for: .normal)
+        }
+    }
 }
 
 
@@ -76,18 +101,8 @@ extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         
-        let searchResult = newWordsModel.searchNewWords(textField.text ?? "")
-        let randomNewWords = newWordsModel.getRandomNewWords(searchTextField.text ?? "")
-        
-        for (word, button) in zip(randomNewWords, newWordsExampleList) {
-            button.setTitle(word, for: .normal)
-        }
-        
-        if searchResult.0 {
-            searchResultLabel.text = searchResult.1
-        }else {
-            presentAlert(message: textField.text ?? "")
-        }
+        searchNewWords(textField.text ?? "")
+        updateRandomButtonTitle(textField.text ?? "")
         
         return true
     }
