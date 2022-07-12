@@ -7,45 +7,68 @@
 
 import Foundation
 
-struct NewWords {
+
+enum NewWord: String, CustomStringConvertible, CaseIterable {
+    case 삼귀자
+    case 꾸안꾸
+    case 만반잘부
+    case 댕댕이
+    case 남아공
+    case 답정너
+    case 따아
+    case 아아
+    case 아샷추
+    case 띵작
     
-    private var newWordsList: [String: String] = [:]
+    var description: String {
+        switch self {
+        case .삼귀자: return "연애를 시작하기 전 썸 단계"
+        case .꾸안꾸: return "꾸민듯 안꾸민듯"
+        case .만반잘부: return "만나서 반가워 잘 부탁해"
+        case .댕댕이: return "멍멍이"
+        case .남아공: return "남아서 공부나 해"
+        case .따아: return "따뜻한 아메리카노"
+        case .아아: return "아이스 아메리카노"
+        case .아샷추: return "아이스티 샷추가"
+        case .답정너: return "답은 정해져 있고 너는 대답만 해"
+        case .띵작: return "명작"
+        }
+    }
+}
+
+
+struct NewWordsModel {
+    
+    private var newWordsList: [NewWord] = []
+    
     
     init() {
-        newWordsList = [
-            "삼귀자": "연애를 시작하기 전 썸 단계!",
-            "꾸안꾸": "꾸민듯 안꾸민듯",
-            "만반잘부": "만나서 반가워 잘 부탁해",
-            "댕댕이": "멍멍이",
-            "남아공": "남아서 공부나 해",
-            "답정너": "답은 정해져 있고 너는 대답만 해",
-            "따아": "따뜻한 아메리카노",
-            "아아": "아이스 아메리카노",
-            "아샷추": "아이스티에 샷 추가",
-            "띵작": "명작"
-        ]
+        NewWord.allCases.forEach({
+            newWordsList.append($0)
+        })
     }
     
     
     func searchNewWords(_ keyWord: String) -> (Bool, String) {
         
-        if let searchResult = newWordsList.filter({$0.key == keyWord}).values.first {
-            return (true, searchResult)
-        }else {
-            return (false, "")
+        for newWord in newWordsList {
+            if newWord.rawValue == keyWord {
+                return (true, newWord.description)
+            }
         }
+        return (false, "")
     }
     
     
-    func getRandomNewWords(_ currentKeyWord: String) -> Set<String> {
-        let newWordsArray = newWordsList.keys
-        var randomSet: Set<String> = [currentKeyWord]
+    func getRandomNewWords() -> Set<NewWord> {
         
-        while randomSet.count <= 4 {
-            randomSet.insert(newWordsArray.randomElement()!)
+        guard newWordsList.count >= 4 else {return []}
+        
+        var randomSet: Set<NewWord> = []
+        
+        while randomSet.count <= 3 {
+            randomSet.insert(newWordsList.randomElement()!)
         }
-        
-        randomSet.remove(currentKeyWord)
         
         return randomSet
     }
