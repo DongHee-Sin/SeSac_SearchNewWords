@@ -25,7 +25,7 @@ class SearchViewController: UIViewController {
         
         searchTextField.delegate = self
         
-        updateRandomButtonTitle("")
+        updateRandomButtonTitle()
         
         newWordsExampleList.forEach({settingExampleButtonUI($0)})
     }
@@ -73,7 +73,7 @@ class SearchViewController: UIViewController {
     // TextField 하단 신조어 버튼 탭
     @IBAction func newWordsButtonTapped(_ sender: UIButton) {
         searchNewWords(sender.currentTitle ?? "")
-        updateRandomButtonTitle(sender.currentTitle ?? "")
+        updateRandomButtonTitle()
     }
     
     // 신조어 검색
@@ -88,7 +88,7 @@ class SearchViewController: UIViewController {
     }
     
     // TextField 하단 신조어 예시 버튼들 업데이트
-    func updateRandomButtonTitle(_ currentKeyWord: String) {
+    func updateRandomButtonTitle() {
         let randomNewWords = newWordsModel.getRandomNewWords()
         for (newWord, button) in zip(randomNewWords, newWordsExampleList) {
             button.setTitle(newWord.rawValue, for: .normal)
@@ -106,7 +106,7 @@ extension SearchViewController: UITextFieldDelegate {
         self.view.endEditing(true)
         
         searchNewWords(textField.text ?? "")
-        updateRandomButtonTitle(textField.text ?? "")
+        updateRandomButtonTitle()
         
         return true
     }
