@@ -58,8 +58,15 @@ class SearchViewController: UIViewController {
     func presentAlert(message: String) {
         let alertController = UIAlertController(title: "검색 실패", message: "\(message)라는 신조어는 등록되지 않았습니다.", preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-            self?.searchTextField.text = nil
-            self?.searchResultLabel.text = nil
+            // 피드백 반영: self를 옵셔널 바인딩하여 처리
+            // 옵셔널 바인딩을 추가함으로써 얻는 이점 (추측..)
+            // 옵셔널 바인딩에 실패하면 바로 return하므로 불필요한 코드 실행을 방지한다. => 성능개선
+            guard let searchVC = self else { return }
+            searchVC.searchTextField.text = nil
+            searchVC.searchResultLabel.text = nil
+            
+//            self?.searchTextField.text = nil
+//            self?.searchResultLabel.text = nil
         }
         alertController.addAction(alertAction)
         present(alertController, animated: true)
