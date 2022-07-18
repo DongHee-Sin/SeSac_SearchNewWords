@@ -41,14 +41,14 @@ struct NewWordsModel {
     
     private var newWordsList: [NewWord] = []
     
-    
+    // 열거형 case 리스트를 바탕으로 Model 구조체 초기화
     init() {
         NewWord.allCases.forEach({
             newWordsList.append($0)
         })
     }
     
-    
+    // 매개변수로 검색어를 입력하면, 결과값을 튜플로 반환 (검색 성공여부: Bool, 검색결과: String)
     func searchNewWords(_ keyWord: String) -> (Bool, String) {
         
         for newWord in newWordsList {
@@ -60,6 +60,7 @@ struct NewWordsModel {
     }
     
     
+    // 검색창 하단 버튼에 추가하기 위한 랜덤 신조어 4개 반환
     func getRandomNewWords() -> Set<NewWord> {
         
         guard newWordsList.count >= 4 else {return []}

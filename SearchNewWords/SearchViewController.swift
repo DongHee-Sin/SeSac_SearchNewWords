@@ -14,6 +14,7 @@ class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchTextField: UITextField!
     
+    // 검색창 하단의 연관(?) 신조어 버튼 4개
     @IBOutlet var newWordsExampleList: [UIButton]!
     
     @IBOutlet weak var searchResultLabel: UILabel!
@@ -33,17 +34,21 @@ class SearchViewController: UIViewController {
 
     
     // MARK: - Methods
+    
+    // 검색창 하단 버튼 4개 UI 설정
     func settingExampleButtonUI(_ button: UIButton) {
         addRadius(button)
         addBorder(button)
         button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     }
     
+    // Radius 추가
     func addRadius(_ view: UIView) {
         view.clipsToBounds = true
         view.layer.cornerRadius = view.frame.height / 5
     }
     
+    // 테두리 추가
     func addBorder(_ view: UIView) {
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
@@ -81,8 +86,10 @@ class SearchViewController: UIViewController {
         let searchResult = newWordsModel.searchNewWords(keyWord)
         
         if searchResult.0 {
+            // 검색 결과가 ture인 경우
             searchResultLabel.text = searchResult.1
         }else {
+            // 검색 결과가 false인 경우
             presentAlert(message: keyWord)
         }
     }
